@@ -18,18 +18,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative; /* For premium overlays */
-    }
-
-    /* Premium Valentine Background Theme - Add subtle heart pattern */
-    body::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M50 15C30 0 0 30 0 60C0 90 50 120 50 120C50 120 100 90 100 60C100 30 70 0 50 15Z" fill="white"/></svg>') repeat;
-      background-size: 50px 50px;
-      z-index: 1;
-      pointer-events: none;
     }
 
     /* ---------------- LOADING SCREEN ---------------- */
@@ -44,12 +32,6 @@
       z-index: 5000;
       color: white;
       animation: fadeIn 0.6s ease;
-      transition: opacity 1s ease-out; /* Rich transition for hide */
-    }
-
-    .loader.hidden {
-      opacity: 0;
-      pointer-events: none;
     }
 
     .loader h1 {
@@ -81,26 +63,6 @@
     .pulse-heart::before { top: -40px; left: 0; }
     .pulse-heart::after { left: 40px; top: 0; }
 
-    /* Start Button for Interaction (to enable auto-play) */
-    #startBtn {
-      background: linear-gradient(135deg, #ff2a68, #ff6fa1);
-      color: white;
-      border: none;
-      padding: 14px 28px;
-      border-radius: 999px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 10px 30px rgba(255,0,100,0.5);
-      animation: glow 2s infinite;
-      margin-top: 20px;
-      transition: transform 0.3s ease;
-    }
-
-    #startBtn:hover {
-      transform: scale(1.05);
-    }
-
     /* ---------------- FLOATING HEARTS ---------------- */
     .floating {
       position: absolute;
@@ -111,12 +73,11 @@
       opacity: 0.7;
       animation: floatUp 9s linear infinite;
       pointer-events: none;
-      z-index: 2; /* Above background */
     }
 
     @keyframes floatUp {
-      from { transform: translateY(110vh) scale(0.7) rotate(0deg); opacity: 0; } /* Added rotate for premium feel */
-      to { transform: translateY(-10vh) scale(1.2) rotate(360deg); opacity: 1; }
+      from { transform: translateY(110vh) scale(0.7); opacity: 0; }
+      to { transform: translateY(-10vh) scale(1.2); opacity: 1; }
     }
 
     /* ---------------- MAIN CARD ---------------- */
@@ -131,34 +92,12 @@
       box-shadow: 0 30px 80px rgba(0,0,0,0.35);
       position: relative;
       z-index: 20;
-      opacity: 0;
-      transform: scale(0.95);
-      transition: opacity 1s ease, transform 1s ease; /* Rich entry transition */
+      animation: cardEnter 1s ease;
     }
 
-    .card.visible {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    /* Sequential animations for premium feel */
-    .card > * {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .card.visible > *:nth-child(1) { transition-delay: 0.2s; }
-    .card.visible > *:nth-child(2) { transition-delay: 0.4s; }
-    .card.visible > *:nth-child(3) { transition-delay: 0.6s; }
-    .card.visible > *:nth-child(4) { transition-delay: 0.8s; }
-    .card.visible > *:nth-child(5) { transition-delay: 1.0s; }
-    .card.visible > *:nth-child(6) { transition-delay: 1.2s; }
-    .card.visible > *:nth-child(7) { transition-delay: 1.4s; }
-
-    .card.visible > * {
-      opacity: 1;
-      transform: translateY(0);
+    @keyframes cardEnter {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     h1 {
@@ -268,7 +207,6 @@
       left: 0;
       right: 0;
       margin: auto;
-      transition: transform 0.2s ease; /* Smoother escape */
     }
 
     #kidsBtn {
@@ -314,13 +252,6 @@
       align-items: center;
       justify-content: center;
       z-index: 999;
-      opacity: 0;
-      transition: opacity 0.5s ease; /* Rich modal transition */
-    }
-
-    .modal.visible {
-      display: flex;
-      opacity: 1;
     }
 
     .modal-content {
@@ -332,12 +263,6 @@
       text-align: center;
       animation: pop 0.45s ease;
       box-shadow: 0 25px 60px rgba(0,0,0,0.35);
-      transform: scale(0.9);
-      transition: transform 0.3s ease;
-    }
-
-    .modal.visible .modal-content {
-      transform: scale(1);
     }
 
     @keyframes pop {
@@ -367,11 +292,6 @@
       cursor: pointer;
       font-weight: 600;
       box-shadow: 0 8px 18px rgba(255,0,100,0.4);
-      transition: transform 0.2s ease;
-    }
-
-    .close:hover {
-      transform: scale(1.05);
     }
 
     .baby-photo {
@@ -382,11 +302,6 @@
       border: 4px solid #ffd166;
       box-shadow: 0 10px 25px rgba(0,0,0,0.25);
       margin-bottom: 12px;
-      transition: transform 0.4s ease; /* Interactive hover */
-    }
-
-    .baby-photo:hover {
-      transform: rotate(5deg) scale(1.1);
     }
 
     /* ---------------- SLIDESHOW ---------------- */
@@ -404,7 +319,7 @@
       position: absolute;
       inset: 0;
       opacity: 0;
-      transition: opacity 1s ease-in-out; /* Smoother transition */
+      transition: opacity 1s ease;
       object-fit: cover;
       width: 100%;
       height: 100%;
@@ -428,13 +343,6 @@
       color: white;
       text-align: center;
       padding: 20px;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-
-    .celebrate.visible {
-      display: flex;
-      opacity: 1;
     }
 
     .celebrate h1 {
@@ -528,7 +436,7 @@
 <body>
 
   <!-- ♪ MUSIC -->
-  <audio id="bgMusic" loop playsinline>
+  <audio id="bgMusic" loop playsinline muted>
     <source src="audio/el-amado.mp3" type="audio/mpeg">
   </audio>
 
@@ -538,12 +446,11 @@
   <!-- 🎵 MUSIC CONTROL -->
   <div class="music-btn" id="musicToggle">♪</div>
 
-  <!-- ⏳ LOADING SCREEN with Start Button -->
+  <!-- ⏳ LOADING SCREEN -->
   <div class="loader" id="loader">
     <div class="pulse-heart"></div>
     <h1>Brian ❤️ Fidy</h1>
     <p>Loading your love story...</p>
-    <button id="startBtn">Enter Our Love Story ❤️</button>
   </div>
 
   <!-- 💖 FLOATING HEARTS SCRIPT -->
@@ -561,7 +468,7 @@
   </script>
 
   <!-- 💌 MAIN CARD -->
-  <div class="card" id="mainCard">
+  <div class="card" id="mainCard" style="display:none;">
     <h1>Brian ❤️ Fidy</h1>
 
     <div class="photos">
@@ -641,7 +548,6 @@
 
   <script>
     const loader = document.getElementById("loader");
-    const startBtn = document.getElementById("startBtn");
     const mainCard = document.getElementById("mainCard");
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
@@ -653,32 +559,36 @@
     const kidsModal = document.getElementById("kidsModal");
     const celebrate = document.getElementById("celebrate");
     const music = document.getElementById("bgMusic");
+
+    // Enable audio on first user interaction (required by modern browsers)
+    document.addEventListener("click", function enableAudioOnce() {
+        if (music.muted) {
+            music.muted = false;
+            music.volume = 0.9;
+            music.play().catch(function(e) {
+                console.log("Play was prevented:", e);
+            });
+        }
+        // Remove this listener after first successful interaction
+        document.removeEventListener("click", enableAudioOnce);
+    }, { once: true });
     const musicToggle = document.getElementById("musicToggle");
     const heart = document.getElementById("mainHeart");
     const slides = document.querySelectorAll(".slide");
     const fireworksCanvas = document.getElementById("fireworks");
     const ctx = fireworksCanvas.getContext("2d");
 
-    /* ---------- LOADING SCREEN with Interaction for Auto-Play ---------- */
+    /* ---------- LOADING SCREEN ---------- */
     window.addEventListener("load", () => {
-      // Show start button after short delay
       setTimeout(() => {
-        startBtn.style.display = "block";
-      }, 1000); // Simulate loading
-    });
-
-    startBtn.addEventListener("click", () => {
-      vibrate(50);
-      loader.classList.add("hidden");
-      mainCard.classList.add("visible");
-      // Play music automatically after interaction
-      music.volume = 0.85;
-      music.play().catch(err => console.log("Play failed:", err));
-      musicToggle.textContent = "♪";
-      // Remove loader after transition
-      setTimeout(() => {
+        music.muted = false;
+        music.volume = 0.85;
+        music.play().catch(() => {});
         loader.style.display = "none";
-      }, 1000);
+        mainCard.style.display = "block";
+        music.volume = 0.9;
+        music.play().catch(()=>{});
+      }, 1800);
     });
 
     /* ---------- MOBILE VIBRATION FEEDBACK ---------- */
@@ -720,7 +630,7 @@
     /* ---------- YES BUTTON ---------- */
     yesBtn.addEventListener("click", () => {
       vibrate([100, 50, 100]);
-      celebrate.classList.add("visible");
+      celebrate.style.display = "flex";
       launchConfetti();
       startChorusFireworks();
       setTimeout(fullscreenFinale, 3500);
@@ -729,19 +639,19 @@
     /* ---------- KIDS BUTTON ---------- */
     kidsBtn.addEventListener("click", () => {
       vibrate(40);
-      kidsModal.classList.add("visible");
+      kidsModal.style.display = "flex";
     });
 
     /* ---------- LETTER BUTTON ---------- */
     letterBtn.addEventListener("click", () => {
       vibrate(40);
-      letterModal.classList.add("visible");
+      letterModal.style.display = "flex";
     });
 
     /* ---------- MAP BUTTON ---------- */
     mapBtn.addEventListener("click", () => {
       vibrate(60);
-      window.open("https://www.google.com/maps/search/?api=1&query=-1.2833,36.8167", "_blank");
+      window.open("https://www.google.com/maps/search/?api=1https://www.google.com/maps/search/?api=1&query=Nairobi+Kenyaquery=-1.2833,36.8167", "_blank");
     });
 
     /* ---------- SHARE BUTTON ---------- */
@@ -751,14 +661,8 @@
       window.open(`https://wa.me/?text=${text}`, "_blank");
     });
 
-    function closeLetter() { 
-      letterModal.classList.remove("visible");
-      setTimeout(() => { letterModal.style.display = "none"; }, 500);
-    }
-    function closeKids() { 
-      kidsModal.classList.remove("visible");
-      setTimeout(() => { kidsModal.style.display = "none"; }, 500);
-    }
+    function closeLetter() { letterModal.style.display = "none"; }
+    function closeKids() { kidsModal.style.display = "none"; }
 
     /* ---------- SLIDESHOW ---------- */
     let slideIndex = 0;
